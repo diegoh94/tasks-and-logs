@@ -48,7 +48,9 @@
                                 <td>{{ $task->description }}</td>
                                 <td>{{ $task->user_created->name}}</td>
                                 <td>{{ $task->user_assigning->name}}</td>
-                                <td>{{ $task->deadline}}</td>
+                                <td @if($task->deadline < now()) class="table-danger" @endif>
+                                    {{ $task->deadline}}
+                                </td>
                                 <td>
                                     <a href="{{ url('/tareas/'.$task->id.'/ver') }}" class="btn btn-secondary">Ver</a>
                                     <a href="{{ url('/tareas/'.$task->id.'/editar') }}" class="btn btn-primary">Editar</a>

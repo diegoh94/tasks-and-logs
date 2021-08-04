@@ -30,4 +30,4 @@ Route::put('/tareas/{task}/editar', [App\Http\Controllers\TaskController::class,
 Route::delete('/tareas/{task}/eliminar', [App\Http\Controllers\TaskController::class, 'destroy']);
 
 // Logs
-Route::post('/tareas/{taskId}/logs', [App\Http\Controllers\TaskLogController::class, 'store']);
+Route::post('/tareas/{task}/logs', [App\Http\Controllers\TaskLogController::class, 'store']);

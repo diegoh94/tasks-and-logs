@@ -55,7 +55,6 @@ class TaskController extends Controller
     }
 
     public function edit(Task $task) {
-
         if (auth()->id() !== $task->user_assigning_id) {
             session()->flash('warning', 'No puedes editar una tarea que no tienes asignada');
             return back();
