@@ -8,16 +8,28 @@ use App\Models\Task;
 
 class TaskController extends Controller
 {
-    public function create(){
-    	
-        $users = User::all();
-    	return view('tasks.create')->with(compact('users'));;
+    public function __construct() {
+        $this->middleware('auth');
+    }
 
+
+    public function create() {    	
+        $users = User::all();
+    	
+        return view('tasks.create')->with(compact('users'));
     }
 
     public function store(Request $request) {
-    	//dd($request);
-        $data = $request->all();
+    	
+        $data = $request->validate([
+            'description' => 'required|min:3',
+            'deadline' => 'required|date_format:Y-m-d|after_or_equal:now',
+            'user_assigning_id' => 'required|exists:users,id'
+        ]/*, [
+            'description.required' => 'Es necesario ingresar una descripción',
+
+        ]*/);
+
         $data['user_created_id'] = auth()->id();
 
     	Task::create($data);
@@ -27,17 +39,28 @@ class TaskController extends Controller
 
     }
 
-    public function show($id){
-        
-        $task = Task::find($id);
-        $users = User::all();
+    public function show(Task $task) 
+    {   
+        if (auth()->id() !== $task->user_assigning_id) {
+            session()->flash('warning', 'No puedes acceder a una tarea que no tienes asignada');
+            return back();
+        }
 
-        return view('tasks.show',compact('task','users'));
+        // $task = Task::find($id);
+        $users = User::all();
+        
+        // $logs = $task->logs; dd($logs);
+
+        return view('tasks.show', compact('task','users'));
     }
 
-    public function edit($id){
+    public function edit(Task $task) {
+
+        if (auth()->id() !== $task->user_assigning_id) {
+            session()->flash('warning', 'No puedes editar una tarea que no tienes asignada');
+            return back();
+        }
         
-        $task = Task::find($id);
         $users = User::all();
 
         return view('tasks.edit',compact('task','users'));   
@@ -55,6 +78,11 @@ class TaskController extends Controller
 
     public function destroy(Task $task)
     {
+        if (auth()->id() !== $task->user_assigning_id) {
+            session()->flash('warning', 'No puedes eliminar una tarea que no tienes asignada');
+            return back();
+        }
+
         $task->delete(); // deleted_at
         session()->flash('notification', 'La tarea ha sido eliminada');
 

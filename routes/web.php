@@ -21,10 +21,13 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index']);
 
+// Tasks
 Route::get('/tareas/registrar', [App\Http\Controllers\TaskController::class, 'create']);
 Route::post('/tareas/registrar', [App\Http\Controllers\TaskController::class, 'store']);
-Route::get('/tareas/{id}/ver', [App\Http\Controllers\TaskController::class, 'show']);
-Route::get('/tareas/{id}/editar', [App\Http\Controllers\TaskController::class, 'edit']);
+Route::get('/tareas/{task}/ver', [App\Http\Controllers\TaskController::class, 'show']);
+Route::get('/tareas/{task}/editar', [App\Http\Controllers\TaskController::class, 'edit']);
 Route::put('/tareas/{task}/editar', [App\Http\Controllers\TaskController::class, 'update']);
 Route::delete('/tareas/{task}/eliminar', [App\Http\Controllers\TaskController::class, 'destroy']);
-//Route::delete('/empleados/{employee}', 'EmployeeController@destroy');
+
+// Logs
+Route::post('/tareas/{taskId}/logs', [App\Http\Controllers\TaskLogController::class, 'store']);

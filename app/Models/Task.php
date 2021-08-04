@@ -16,10 +16,16 @@ class Task extends Model
     	'description', 'deadline', 'user_created_id', 'user_assigning_id',
     ];
 
-    public function user_created(){
+    public function user_created() {
         return $this->belongsTo(User::class);
     }
-    public function user_assigning(){
+
+    public function user_assigning() {
         return $this->belongsTo(User::class);
+    }
+
+    // $task->logs
+    public function logs() {
+        return $this->hasMany(TaskLog::class);   
     }
 }

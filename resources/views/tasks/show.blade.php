@@ -4,10 +4,25 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8 mb-4">
+            @if (session('notification'))
+              <div class="alert alert-success my-4">
+                <p>{{ session('notification') }}</p>
+              </div>
+            @endif
+
+            @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+            @endif
+
             <div class="card">
                 <div class="card-header">Ver tarea</div>
             	<div class="card-body">      		
-            		<input type="hidden" name="user_created_id" value="{{Auth::id()}}">
             		<div class="form-group row">
                         <label for="description" class="col-md-4 col-form-label text-md-right">Descripción</label>
                         <div class="col-md-6">
@@ -47,7 +62,28 @@
             <div class="card">
                 <div class="card-header">Registros</div>
                 <div class="card-body">      		
-        			        	
+                    <form method="POST" action="{{ url('tareas/'.$task->id.'/logs') }}">
+                        @csrf
+                        <div class="form-group row">
+                            <label for="description" class="col-md-4 col-form-label text-md-right">Comentario</label>
+                            <div class="col-md-6">
+                                <textarea class="form-control" name="comment"></textarea>   
+                            </div>                            
+                        </div>
+                        <div class="form-group row mb-0">
+                            <div class="col-md-6 offset-md-4">
+                                <button type="submit" class="btn btn-primary">
+                                    Agregar
+                                </button>
+                            </div>
+                        </div>                        
+                    </form>
+        			
+                    @foreach ($task->logs as $log)
+                        <hr>
+                        <p>{{ $log->comment }}</p>
+                        <p>{{ $log->created_at }}</p>
+                    @endforeach
                 </div>
             </div>
         </div>

@@ -14,6 +14,15 @@
                 </div>
             @endif
 
+            @if (session('warning'))
+                <div class="alert alert-warning my-4">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <p>{{ session('warning') }}</p>
+                </div>
+            @endif
+
             <div class="card">
                 <div class="card-header">Lista de tareas</div>
 

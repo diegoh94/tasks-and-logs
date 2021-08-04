@@ -4,6 +4,16 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
+            @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+            @endif
+            
             <div class="card">
                 <div class="card-header">Registrar nueva tarea</div>
 
@@ -25,7 +35,7 @@
                         <div class="form-group row">
                             <label for="user_assigning_id" class="col-md-4 col-form-label text-md-right">Usuario asignado</label>
                             <div class="col-md-6">
-                                <select name="user_assigning_id" class="form-select form-control" aria-label="Default select example">
+                                <select name="user_assigning_id" class="form-select form-control" required>
 								  <option selected>Seleccionar usuario</option>
 								  @foreach($users as $user)
 								  <option value="{{ $user->id }}">{{ $user->name }}</option>
