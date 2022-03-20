@@ -16,19 +16,19 @@ class TasksTableSeeder extends Seeder
     {
         Task::create([
         	'description' => 'Desafíos postulación TW Group',      
-            'deadline' => '2021-04-02',
+            'deadline' => '2022-03-30',
             'user_created_id' => '1',
             'user_assigning_id' => '2'
         ]);
         Task::create([
         	'description' => 'CRUD Proveedores MDS',      
-            'deadline' => '2021-08-15',
+            'deadline' => '2022-02-15',
             'user_created_id' => '1',
             'user_assigning_id' => '2'
         ]);
         Task::create([
             'description' => 'Redacción SERP de secciones de Nirex',      
-            'deadline' => '2021-01-25',
+            'deadline' => '2022-05-24',
             'user_created_id' => '2',
             'user_assigning_id' => '3'
         ]);

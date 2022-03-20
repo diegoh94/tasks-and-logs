@@ -14,8 +14,7 @@ class TaskController extends Controller
 
 
     public function create() {    	
-        $users = User::all();
-    	
+        $users = User::all();    	
         return view('tasks.create')->with(compact('users'));
     }
 
@@ -39,22 +38,20 @@ class TaskController extends Controller
 
     }
 
-    public function show(Task $task) 
-    {   
+    public function show(Task $task) {   
+
         if (auth()->id() !== $task->user_assigning_id) {
             session()->flash('warning', 'No puedes acceder a una tarea que no tienes asignada');
             return back();
         }
 
-        // $task = Task::find($id);
         $users = User::all();
         
-        // $logs = $task->logs; dd($logs);
-
         return view('tasks.show', compact('task','users'));
     }
 
     public function edit(Task $task) {
+
         if (auth()->id() !== $task->user_assigning_id) {
             session()->flash('warning', 'No puedes editar una tarea que no tienes asignada');
             return back();
@@ -66,6 +63,7 @@ class TaskController extends Controller
     }
 
     public function update(Task $task, Request $request) {
+
         $task->update(
             $request->all()
         );
@@ -82,7 +80,7 @@ class TaskController extends Controller
             return back();
         }
 
-        $task->delete(); // deleted_at
+        $task->delete(); 
         session()->flash('notification', 'La tarea ha sido eliminada');
 
         return back();
